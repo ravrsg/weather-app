@@ -12,7 +12,6 @@ export default new Vuex.Store({
   actions: {
     async getData ({ commit }, city) {
       const axios = require('axios').default;
-
       await axios({
         method: 'post',
         url: 'https://api.openweathermap.org/data/2.5/weather?q=' + city + '&appid=' + this.state.apikey + "&lang=pl&units=metric",

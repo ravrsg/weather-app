@@ -177,7 +177,7 @@
               />
             </svg>
             {{
-              getDate(data.data.sys.sunrise + data.data.timezone, "time")
+              getDate(data.data.sys.sunrise + data.data.timezone, "time", 60)
             }}</span
           >
           <br />
@@ -194,14 +194,14 @@
               />
             </svg>
             {{
-              getDate(data.data.sys.sunset + data.data.timezone, "time")
+              getDate(data.data.sys.sunset + data.data.timezone, "time", 60)
             }}</span
           >
         </div>
       </div>
       <span style="font-size: 15px" :style="{ color: color }">
         Ostatni aktualizacja:
-        {{ getDate(data.data.dt + data.data.timezone, "daytime") }}</span
+        {{ getDate(data.data.dt, "daytime", 0) }}</span
       >
       <img
         class="weather_background_image"
@@ -253,9 +253,9 @@ export default {
       }
       return src;
     },
-    getDate(utc, type) {
+    getDate(utc, type, local) {
       let d = new Date(utc * 1000);
-      let utc_ = d.getTime() + d.getTimezoneOffset() * 60000;
+      let utc_ = d.getTime() + d.getTimezoneOffset() * 1000 * local;
       let nd = new Date(utc_);
       let time =
         ("00" + nd.getHours()).slice(-2) +
@@ -305,12 +305,10 @@ export default {
   align-items: flex-start;
   align-content: space-around;
 }
-
 .item {
   align-self: flex-start;
   width: 100px;
 }
-
 .weather_background_image {
   position: absolute;
   top: 0;
@@ -325,13 +323,11 @@ export default {
   pointer-events: none;
   border-radius: 25px;
 }
-
 .no_image {
   background-color: black;
   z-index: 0;
   object-fit: none;
 }
-
 .center {
   position: absolute;
   left: 50%;
@@ -339,7 +335,6 @@ export default {
   transform: translate(-50%, -50%);
   padding: 10px;
 }
-
 .search {
   border: 1px solid grey;
   border-radius: 5px;
@@ -348,7 +343,6 @@ export default {
   outline: 0;
   background-color: #f5f5f5;
 }
-
 .search:hover,
 .search:focus {
   border: 1px solid #009688;
