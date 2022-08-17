@@ -296,6 +296,6 @@ export default {
 .search:hover,
 .search:focus {
   border: 1px solid #009688;
-  background-color: white;
+  background-color: grey;
 }
 </style>
